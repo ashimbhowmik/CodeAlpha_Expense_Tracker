@@ -152,7 +152,7 @@ export default function Login() {
                   className="flex items-center lg:mt-6 mt-10 "
                   onClick={compressAndStoreImage}
                 >
-                  <div className="flex items-center px-4 py-2 rounded-md w-[85px]  overflow-hidden border-blue-500  border gap-3 hover:w-[21%] cursor-pointer ease-linear duration-500 transition-all hover:border-red-300 ">
+                  <div className="flex items-center px-4 py-2 rounded-md lg:w-[85px] w-[50%] overflow-hidden border-blue-500  border gap-3 lg:hover:w-[21%] cursor-pointer ease-linear duration-500 transition-all hover:border-red-300 ">
                     <button className=" text-black ">Submit</button>
                     <div className="">
                       <Loader></Loader>
