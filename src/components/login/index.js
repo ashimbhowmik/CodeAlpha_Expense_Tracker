@@ -24,7 +24,7 @@ export default function Login() {
         <>
           <div className="min-h-screen flex justify-center items-center flex-col 2xl:justify-normal 2xl:pt-28 bg-[#FCFCFE] overflow-hidden">
             <div className="w-[80%] lg:w-full  mx-auto flex flex-col items-center ">
-              <div className="flex items-center gap-5 mt-4 w-full">
+              <div className="flex items-center gap-5 lg:mt-4 w-full">
                 <h1 className="text-4xl text-slate-500 lg:ml-[32.5%] font-semibold">
                   <i>Hello !</i>
                 </h1>
@@ -73,7 +73,7 @@ export default function Login() {
                   <div className="mb-4 lg:w-[50%]">
                     <label
                       htmlFor="firstName"
-                      className="block font-semibold text-sm text-gray-700 mb-2"
+                      className="block font-semibold text-sm text-black mb-2"
                     >
                       First Name
                     </label>
@@ -84,14 +84,14 @@ export default function Login() {
                       placeholder="First Name"
                       value={formData.firstName}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 border rounded-md "
+                      className="input input-bordered w-full max-w-xs bg-white"
                       required
                     />
                   </div>
                   <div className="mb-4 lg:w-[50%]">
                     <label
                       htmlFor="lastName"
-                      className="block font-semibold text-sm text-gray-700 mb-2 "
+                      className="block font-semibold text-sm text-black mb-2 "
                     >
                       Last Name
                     </label>
@@ -102,7 +102,7 @@ export default function Login() {
                       placeholder="Last Name"
                       value={formData.lastName}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 border rounded-md"
+                      className="input input-bordered w-full max-w-xs bg-white text-black"
                       required
                     />
                   </div>
@@ -111,7 +111,7 @@ export default function Login() {
                   <div className="mb-4 lg:w-[50%]">
                     <label
                       htmlFor="email"
-                      className="block font-semibold text-sm text-gray-700 mb-2 "
+                      className="block font-semibold text-sm text-black mb-2 "
                     >
                       Email
                     </label>
@@ -122,14 +122,14 @@ export default function Login() {
                       value={formData.email}
                       onChange={handleInputChange}
                       placeholder="Email"
-                      className="w-full px-3 py-2 border rounded-md"
+                      className="input input-bordered w-full max-w-xs bg-white"
                       required
                     />
                   </div>
                   <div className="mb-4 lg:w-[50%] overflow-hidden">
                     <label
                       htmlFor="work"
-                      className="block font-semibold text-sm text-gray-700 mb-2 "
+                      className="block font-semibold text-sm text-black mb-2 "
                     >
                       Work
                     </label>
@@ -138,7 +138,7 @@ export default function Login() {
                       name="work"
                       value={formData.work}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 border rounded-md"
+                      className="input input-bordered w-full max-w-xs bg-white"
                       required
                     >
                       <option value="">Select your work</option>
@@ -148,11 +148,11 @@ export default function Login() {
                   </div>
                 </div>
 
-                <div
-                  className="flex items-center lg:mt-6 mt-10 "
-                  onClick={compressAndStoreImage}
-                >
-                  <div className="flex items-center px-4 py-2 rounded-md lg:w-[85px] w-[50%] overflow-hidden border-blue-500  border gap-3 lg:hover:w-[21%] cursor-pointer ease-linear duration-500 transition-all hover:border-red-300 ">
+                <div className="flex items-center lg:mt-6 mt-10 ">
+                  <div
+                    onClick={compressAndStoreImage}
+                    className="flex items-center px-4 py-2 rounded-md lg:w-[85px] w-[50%] overflow-hidden border-blue-500  border gap-3 lg:hover:w-[21%] cursor-pointer ease-linear duration-500 transition-all hover:border-red-300 "
+                  >
                     <button className=" text-black ">Submit</button>
                     <div className="">
                       <Loader></Loader>
