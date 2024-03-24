@@ -10,12 +10,19 @@ export default function GlobalState({ children }) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [compressedImageDataURL, setCompressedImageDataURL] = useState(null);
   const [storedFormData, setStoredFormData] = useState(null);
+  const [storedIncomeData, setStoredIncomeData] = useState([]);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
     work: "",
     image: null, // Initialize image field to null
+  });
+  const [income, setInome] = useState({
+    incomeData: "",
+    amount: "",
+    date: "",
+    ref: "",
   });
 
   const handleFileChange = (event) => {
@@ -27,6 +34,13 @@ export default function GlobalState({ children }) {
     const { name, value } = event.target;
     setFormData({
       ...formData,
+      [name]: value,
+    });
+  };
+  const handleInputChange2 = (event) => {
+    const { name, value } = event.target;
+    setInome({
+      ...income,
       [name]: value,
     });
   };
@@ -105,6 +119,29 @@ export default function GlobalState({ children }) {
     }, 1000);
   };
 
+  const handleSubmitIncome = (event) => {
+    event.preventDefault();
+
+    // Store the data in localStorage
+    const currentIncomeData =
+      JSON.parse(localStorage.getItem("incomeData")) || []; // Get current data or initialize as empty array
+    const newIncomeData = [...currentIncomeData, income]; // Add new income data to the array
+    localStorage.setItem("incomeData", JSON.stringify(newIncomeData));
+
+    setStoredIncomeData(newIncomeData);
+
+    // Clear the form fields
+    setInome({
+      incomeData: "",
+      amount: "",
+      date: "",
+      ref: "",
+    });
+
+    const notify = () => toast.success("Data Saved Successfully");
+    notify();
+  };
+
   useEffect(() => {
     // Retrieve stored compressed image data URL from localStorage
 
@@ -122,6 +159,28 @@ export default function GlobalState({ children }) {
     }
   }, []);
 
+  useEffect(() => {
+    const storedIncomeData = JSON.parse(localStorage.getItem("incomeData"));
+    if (storedIncomeData) {
+      setStoredIncomeData(storedIncomeData);
+    }
+  }, [compressedImageDataURL]);
+
+  const deleteIncomeItem = (index) => {
+    // Create a copy of the stored income data array
+    const updatedIncomeData = [...storedIncomeData];
+    // Remove the income item at the specified index
+    const deletedItem = updatedIncomeData.splice(index, 1)[0];
+    // Update the state with the modified array
+    setStoredIncomeData(updatedIncomeData);
+
+    // Update localStorage to remove the deleted item
+    const updatedLocalStorageData = JSON.parse(
+      localStorage.getItem("incomeData")
+    );
+    updatedLocalStorageData.splice(index, 1);
+    localStorage.setItem("incomeData", JSON.stringify(updatedLocalStorageData));
+  };
   return (
     <GlobalContext.Provider
       value={{
@@ -139,6 +198,12 @@ export default function GlobalState({ children }) {
         compressAndStoreImage,
         handleInputChange,
         handleFileChange,
+        income,
+        setInome,
+        handleSubmitIncome,
+        handleInputChange2,
+        storedIncomeData,
+        deleteIncomeItem,
       }}
     >
       {children}
