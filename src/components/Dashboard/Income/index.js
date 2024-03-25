@@ -9,7 +9,7 @@ export default function Income() {
     storedIncomeData,
     deleteIncomeItem,
   } = useContext(GlobalContext);
-  console.log(storedIncomeData);
+  // console.log(storedIncomeData);
   const totalIncome = storedIncomeData.reduce(
     (total, item) => total + parseFloat(item.amount),
     0
@@ -25,8 +25,8 @@ export default function Income() {
               Total Income : ${totalIncome}
             </h1>
           </div>
-          <div className="flex w-full gap-10 mt-10">
-            <div className="w-[30%]">
+          <div className="lg:flex w-full gap-10 mt-10">
+            <div className="lg:w-[30%]">
               <form action="" className="space-y-7 ">
                 <div className=" space-y-7">
                   <input
@@ -91,7 +91,7 @@ export default function Income() {
                 </button>
               </form>
             </div>
-            <div className="w-[70%] space-y-5 ">
+            <div className="lg:w-[70%] space-y-5 ">
               {storedIncomeData.map((item, index) => (
                 <div
                   key={index}
@@ -123,10 +123,10 @@ export default function Income() {
                       <h1 className="font-semibold">{item.incomeData}</h1>
                     </div>
                     <div className="flex gap-5 items-center">
-                      <div>
+                      <div className="w-[10%]">
                         <h1>$ {item.amount}</h1>
                       </div>
-                      <div className="flex gap-1 items-center">
+                      <div className="flex gap-1 items-center w-[20%]">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="18"
@@ -148,7 +148,7 @@ export default function Income() {
                         </svg>
                         <p>{item.date}</p>
                       </div>
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-1 overflow-hidden w-[70%]">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="18"
@@ -168,7 +168,7 @@ export default function Income() {
                       </div>
                     </div>
                   </div>
-                  <div
+                  <button
                     onClick={() => deleteIncomeItem(index)}
                     className="w-[15%] flex justify-center items-center"
                   >
@@ -191,7 +191,7 @@ export default function Income() {
                       <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
                       <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
                     </svg>
-                  </div>
+                  </button>
                 </div>
               ))}
             </div>

@@ -11,6 +11,7 @@ export default function GlobalState({ children }) {
   const [compressedImageDataURL, setCompressedImageDataURL] = useState(null);
   const [storedFormData, setStoredFormData] = useState(null);
   const [storedIncomeData, setStoredIncomeData] = useState([]);
+  const [storedExpenseData, setStoredExpenseData] = useState([]);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -20,6 +21,12 @@ export default function GlobalState({ children }) {
   });
   const [income, setInome] = useState({
     incomeData: "",
+    amount: "",
+    date: "",
+    ref: "",
+  });
+  const [expense, setExpense] = useState({
+    expenseData: "",
     amount: "",
     date: "",
     ref: "",
@@ -39,10 +46,28 @@ export default function GlobalState({ children }) {
   };
   const handleInputChange2 = (event) => {
     const { name, value } = event.target;
-    setInome({
-      ...income,
-      [name]: value,
-    });
+
+    // Check if the input is a valid number greater than 0
+    if (name === "amount" && (isNaN(value) || parseFloat(value) <= 0)) {
+      alert("Amount is invalid");
+    } else {
+      // Update the income state with the valid input value
+      setInome({
+        ...income,
+        [name]: value,
+      });
+    }
+  };
+  const handleExpense = (event) => {
+    const { name, value } = event.target;
+    if (name === "amount" && (isNaN(value) || parseFloat(value) <= 0)) {
+      alert("Amount is invalid");
+    } else {
+      setExpense({
+        ...expense,
+        [name]: value,
+      });
+    }
   };
 
   const compressAndStoreImage = async () => {
@@ -96,6 +121,8 @@ export default function GlobalState({ children }) {
     };
   };
 
+  // Login form data
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -119,6 +146,8 @@ export default function GlobalState({ children }) {
     }, 1000);
   };
 
+  // Income data
+
   const handleSubmitIncome = (event) => {
     event.preventDefault();
 
@@ -138,26 +167,9 @@ export default function GlobalState({ children }) {
       ref: "",
     });
 
-    const notify = () => toast.success("Data Saved Successfully");
+    const notify = () => toast.success("Income Saved Successfully");
     notify();
   };
-
-  useEffect(() => {
-    // Retrieve stored compressed image data URL from localStorage
-
-    const storedCompressedImageDataURL =
-      localStorage.getItem("compressedImage");
-
-    if (storedCompressedImageDataURL) {
-      setCompressedImageDataURL(storedCompressedImageDataURL);
-    }
-
-    // Retrieve stored form data from localStorage
-    const storedFormData = JSON.parse(localStorage.getItem("formData"));
-    if (storedFormData) {
-      setStoredFormData(storedFormData);
-    }
-  }, []);
 
   useEffect(() => {
     const storedIncomeData = JSON.parse(localStorage.getItem("incomeData"));
@@ -181,6 +193,79 @@ export default function GlobalState({ children }) {
     updatedLocalStorageData.splice(index, 1);
     localStorage.setItem("incomeData", JSON.stringify(updatedLocalStorageData));
   };
+
+  // Expense data
+
+  const handleSubmitExpense = (event) => {
+    event.preventDefault();
+
+    const currentExpense =
+      JSON.parse(localStorage.getItem("expenseData")) || [];
+    const setNewExpense = [...currentExpense, expense];
+    localStorage.setItem("expenseData", JSON.stringify(setNewExpense));
+
+    setStoredExpenseData(setNewExpense);
+
+    // Clear the form fields
+    setExpense({
+      expenseData: "",
+      amount: "",
+      date: "",
+      ref: "",
+    });
+
+    const notify = () => toast.success("Expense Saved Successfully");
+    notify();
+  };
+
+  useEffect(() => {
+    const storedExpenseData = JSON.parse(localStorage.getItem("expenseData"));
+    if (storedExpenseData) {
+      setStoredExpenseData(storedExpenseData);
+    }
+  }, [compressedImageDataURL]);
+
+  const deleteExpense = (index) => {
+    // Create a copy of the stored income data array
+    const updateExpense = [...storedExpenseData];
+    // Remove the income item at the specified index
+    const deletedItem = updateExpense.splice(index, 1)[0];
+    // Update the state with the modified array
+    setStoredExpenseData(updateExpense);
+
+    // Update localStorage to remove the deleted item
+    const updatedLocalStorageData = JSON.parse(
+      localStorage.getItem("expenseData")
+    );
+    updatedLocalStorageData.splice(index, 1);
+    localStorage.setItem(
+      "expenseData",
+      JSON.stringify(updatedLocalStorageData)
+    );
+  };
+  const signoutData = () => {
+    localStorage.removeItem("formData");
+    localStorage.removeItem("compressedImage");
+    window.location.reload();
+  };
+
+  useEffect(() => {
+    // Retrieve stored compressed image data URL from localStorage
+
+    const storedCompressedImageDataURL =
+      localStorage.getItem("compressedImage");
+
+    if (storedCompressedImageDataURL) {
+      setCompressedImageDataURL(storedCompressedImageDataURL);
+    }
+
+    // Retrieve stored form data from localStorage
+    const storedFormData = JSON.parse(localStorage.getItem("formData"));
+    if (storedFormData) {
+      setStoredFormData(storedFormData);
+    }
+  }, []);
+
   return (
     <GlobalContext.Provider
       value={{
@@ -204,6 +289,12 @@ export default function GlobalState({ children }) {
         handleInputChange2,
         storedIncomeData,
         deleteIncomeItem,
+        expense,
+        handleExpense,
+        handleSubmitExpense,
+        storedExpenseData,
+        deleteExpense,
+        signoutData,
       }}
     >
       {children}
