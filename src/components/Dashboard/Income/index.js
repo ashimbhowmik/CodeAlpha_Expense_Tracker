@@ -123,7 +123,7 @@ export default function Income() {
                       <h1 className="font-semibold">{item.incomeData}</h1>
                     </div>
                     <div className="flex gap-5 items-center">
-                      <div className="w-[10%]">
+                      <div className="w-[15%]">
                         <h1>$ {item.amount}</h1>
                       </div>
                       <div className="flex gap-1 items-center w-[20%]">
@@ -148,7 +148,7 @@ export default function Income() {
                         </svg>
                         <p>{item.date}</p>
                       </div>
-                      <div className="flex items-center gap-1 overflow-hidden w-[70%]">
+                      <div className="flex items-center gap-1 overflow-hidden w-[65%]">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="18"

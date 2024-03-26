@@ -21,7 +21,7 @@ export default function Dashboard() {
         <div className="min-h-screen bg-[#ebeef2]">
           <div className="drawer lg:drawer-open lg:p-10 min-h-screen">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-            <div className="drawer-content flex flex-col p-5 border-[3px] border-white lg:ml-10 rounded-3xl bg-[#fdfefe]">
+            <div className="drawer-content flex flex-col py-5 px-8  border-[3px] border-white lg:ml-10 rounded-3xl bg-[#fdfefe]">
               {/* All page content here */}
 
               {view === "income" ? (
